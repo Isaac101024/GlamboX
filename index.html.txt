@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlamBox - Tu dosis mensual de belleza</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --rose: #F472B6;
+    --rose-light: #FCEEF6;
+    --rose-deep: #DB2777;
+    --mint: #A7F3D0;
+    --lavender: #E9D5FF;
+    --cream: #FFF9F5;
+    --text-dark: #1a0a12;
+    --text-mid: #6b3a52;
+  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text-dark); overflow-x: hidden; }
+
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 2.5rem; background: white;
+    border-bottom: 1.5px solid #fce7f3;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .logo { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--rose-deep); }
+  .logo span { color: var(--rose); font-style: italic; }
+  nav ul { display: flex; gap: 2rem; list-style: none; }
+  nav ul a { text-decoration: none; font-size: 0.9rem; font-weight: 500; color: var(--text-mid); transition: color 0.2s; }
+  nav ul a:hover { color: var(--rose-deep); }
+  .nav-cta {
+    background: var(--rose); color: white; border: none;
+    padding: 0.55rem 1.3rem; border-radius: 50px; font-size: 0.88rem; font-weight: 500;
+    cursor: pointer; transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: var(--rose-deep); transform: scale(1.03); }
+
+  .hero {
+    display: grid; grid-template-columns: 1fr 1fr; align-items: center;
+    gap: 2rem; padding: 5rem 2.5rem 4rem; max-width: 1100px; margin: 0 auto;
+  }
+  .hero-badge {
+    display: inline-block; background: var(--lavender); color: #7C3AED;
+    font-size: 0.78rem; font-weight: 500; padding: 0.35rem 1rem;
+    border-radius: 50px; margin-bottom: 1.2rem;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    line-height: 1.15; margin-bottom: 1rem;
+  }
+  .hero h1 em { color: var(--rose-deep); font-style: italic; }
+  .hero p { color: var(--text-mid); font-size: 1.05rem; line-height: 1.7; margin-bottom: 2rem; font-weight: 300; }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--rose), var(--rose-deep));
+    color: white; border: none; padding: 0.85rem 2rem;
+    border-radius: 50px; font-size: 1rem; font-weight: 500;
+    cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(244,114,182,0.35);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(244,114,182,0.5); }
+  .btn-secondary {
+    background: transparent; color: var(--rose-deep);
+    border: 1.5px solid var(--rose); padding: 0.85rem 1.8rem;
+    border-radius: 50px; font-size: 1rem; font-weight: 500;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .btn-secondary:hover { background: var(--rose-light); }
+
+  .hero-visual { display: flex; justify-content: center; }
+  .hero-box {
+    width: 280px; height: 280px; background: white;
+    border-radius: 24px; border: 2px solid #fce7f3;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0.5rem; position: relative; overflow: hidden;
+    box-shadow: 0 8px 40px rgba(244,114,182,0.15);
+  }
+  .hero-box::before {
+    content: ''; position: absolute; top: -40px; right: -40px;
+    width: 120px; height: 120px; background: var(--mint);
+    border-radius: 50%; opacity: 0.5;
+  }
+  .hero-box::after {
+    content: ''; position: absolute; bottom: -30px; left: -30px;
+    width: 90px; height: 90px; background: var(--lavender);
+    border-radius: 50%; opacity: 0.6;
+  }
+  .box-emoji { font-size: 3.5rem; z-index: 1; }
+  .box-label { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--rose-deep); z-index: 1; }
+  .box-sub { font-size: 0.78rem; color: var(--text-mid); z-index: 1; }
+  .floating-tag {
+    position: absolute; background: white; border: 1px solid #fce7f3;
+    border-radius: 12px; padding: 0.4rem 0.8rem; font-size: 0.75rem;
+    font-weight: 500; color: var(--rose-deep); white-space: nowrap;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  .tag1 { top: -12px; left: 20px; }
+  .tag2 { bottom: -12px; right: 20px; }
+
+  .benefits-section { background: white; padding: 4rem 2.5rem; }
+  .section-label { text-align: center; font-size: 0.78rem; font-weight: 500; color: var(--rose); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .section-title { text-align: center; font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 3rem; }
+  .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; max-width: 900px; margin: 0 auto; }
+  .benefit-card {
+    background: var(--cream); border-radius: 18px; padding: 1.5rem;
+    text-align: center; border: 1.5px solid transparent;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .benefit-card:hover { border-color: var(--rose); transform: translateY(-4px); }
+  .benefit-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+  .benefit-card h3 { font-size: 1rem; font-weight: 500; margin-bottom: 0.4rem; }
+  .benefit-card p { font-size: 0.85rem; color: var(--text-mid); line-height: 1.6; font-weight: 300; }
+
+  .sub-section { padding: 4.5rem 2.5rem; max-width: 1000px; margin: 0 auto; }
+  .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+  .plan-card {
+    background: white; border-radius: 22px; padding: 2rem;
+    border: 1.5px solid #fce7f3; position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .plan-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(244,114,182,0.12); }
+  .plan-card.featured {
+    border: 2px solid var(--rose);
+    background: linear-gradient(160deg, white 60%, var(--rose-light));
+  }
+  .popular-badge {
+    position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+    background: var(--rose); color: white; font-size: 0.72rem; font-weight: 500;
+    padding: 0.3rem 1rem; border-radius: 50px; white-space: nowrap;
+  }
+  .plan-name { font-size: 0.85rem; font-weight: 500; color: var(--text-mid); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.6rem; }
+  .plan-price { font-family: 'Playfair Display', serif; font-size: 2.4rem; margin-bottom: 0.3rem; }
+  .plan-price span { font-size: 1rem; font-family: 'DM Sans', sans-serif; color: var(--text-mid); font-weight: 300; }
+  .plan-desc { font-size: 0.85rem; color: var(--text-mid); margin-bottom: 1.3rem; font-weight: 300; line-height: 1.5; }
+  .plan-items { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem; }
+  .plan-items li { font-size: 0.88rem; display: flex; align-items: center; gap: 0.5rem; }
+  .plan-items li::before { content: '✦'; color: var(--rose); font-size: 0.65rem; }
+  .plan-btn {
+    width: 100%; padding: 0.8rem; border-radius: 50px;
+    font-size: 0.92rem; font-weight: 500; cursor: pointer;
+    border: 1.5px solid var(--rose); background: transparent; color: var(--rose-deep);
+    transition: background 0.2s, color 0.2s;
+  }
+  .plan-btn:hover { background: var(--rose); color: white; }
+  .plan-card.featured .plan-btn { background: var(--rose); color: white; }
+  .plan-card.featured .plan-btn:hover { background: var(--rose-deep); }
+
+  .trust-section { background: var(--rose-light); padding: 3.5rem 2.5rem; text-align: center; }
+  .trust-stats { display: flex; justify-content: center; gap: 4rem; flex-wrap: wrap; margin-top: 2.5rem; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--rose-deep); }
+  .stat-label { font-size: 0.85rem; color: var(--text-mid); margin-top: 0.3rem; }
+
+  footer {
+    background: var(--text-dark); color: rgba(255,255,255,0.6);
+    padding: 2rem 2.5rem; text-align: center; font-size: 0.85rem;
+  }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: white; margin-bottom: 0.8rem; }
+  .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  .footer-links a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.82rem; }
+  .footer-links a:hover { color: var(--rose); }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; text-align: center; padding: 3rem 1.5rem; }
+    .hero-visual { margin-top: 2rem; }
+    .hero-actions { justify-content: center; }
+    nav ul { display: none; }
+    .trust-stats { gap: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Glam<span>Box</span></div>
+  <ul>
+    <li><a href="#">Inicio</a></li>
+    <li><a href="#">Beneficios</a></li>
+    <li><a href="#">Suscripción</a></li>
+    <li><a href="#">Contacto</a></li>
+  </ul>
+  <button class="nav-cta">Suscribirme ahora</button>
+</nav>
+
+<section>
+  <div class="hero">
+    <div>
+      <div class="hero-badge">✨ Nueva colección cada mes</div>
+      <h1>Tu dosis mensual de <em>belleza</em> a tu puerta</h1>
+      <p>Descubre productos de maquillaje cuidadosamente seleccionados para ti. Sin esfuerzo, sin complicaciones — solo glam.</p>
+      <div class="hero-actions">
+        <button class="btn-primary">Quiero mi caja 💄</button>
+        <button class="btn-secondary">Ver planes</button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div style="position: relative;">
+        <div class="hero-box">
+          <div class="box-emoji">🎁</div>
+          <div class="box-label">Tu GlamBox</div>
+          <div class="box-sub">Entregada el día 1 de cada mes</div>
+        </div>
+        <div class="floating-tag tag1">🌸 5–7 productos exclusivos</div>
+        <div class="floating-tag tag2">💚 Marcas cruelty-free</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="benefits-section">
+  <div class="section-label">Por qué GlamBox</div>
+  <h2 class="section-title">Lo mejor del maquillaje, sin salir de casa</h2>
+  <div class="benefits-grid">
+    <div class="benefit-card">
+      <div class="benefit-icon">💄</div>
+      <h3>Productos premium</h3>
+      <p>Marcas reconocidas y nuevos descubrimientos cada mes.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">🧴</div>
+      <h3>Personalizado para ti</h3>
+      <p>Selección basada en tu tipo de piel y preferencias.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">💸</div>
+      <h3>Ahorra hasta 60%</h3>
+      <p>Valor real de cada caja muy por encima del precio.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">🌿</div>
+      <h3>Cruelty-free</h3>
+      <p>Solo productos éticos y respetuosos con el medio ambiente.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sub-section">
+  <div class="section-label">Suscripción</div>
+  <h2 class="section-title">Elige tu plan</h2>
+  <div class="plans-grid">
+    <div class="plan-card">
+      <div class="plan-name">Esencial</div>
+      <div class="plan-price">$199 <span>/mes</span></div>
+      <div class="plan-desc">Perfecta para comenzar tu rutina de belleza.</div>
+      <ul class="plan-items">
+        <li>3 productos seleccionados</li>
+        <li>Labiales y sombras</li>
+        <li>Envío gratis</li>
+        <li>Cancela cuando quieras</li>
+      </ul>
+      <button class="plan-btn">Empezar</button>
+    </div>
+    <div class="plan-card featured">
+      <div class="popular-badge">⭐ Más popular</div>
+      <div class="plan-name">Glam Total</div>
+      <div class="plan-price">$349 <span>/mes</span></div>
+      <div class="plan-desc">La experiencia completa para las amantes del maquillaje.</div>
+      <ul class="plan-items">
+        <li>6 productos premium</li>
+        <li>Paletas, bases y más</li>
+        <li>Envío express gratis</li>
+        <li>Acceso anticipado a ediciones</li>
+        <li>Descuentos exclusivos</li>
+      </ul>
+      <button class="plan-btn">Suscribirme</button>
+    </div>
+    <div class="plan-card">
+      <div class="plan-name">Pro Glow</div>
+      <div class="plan-price">$499 <span>/mes</span></div>
+      <div class="plan-desc">Para las que no se conforman con menos que lo mejor.</div>
+      <ul class="plan-items">
+        <li>8+ productos de lujo</li>
+        <li>Marcas internacionales</li>
+        <li>Caja sorpresa limitada</li>
+        <li>Asesoría de imagen mensual</li>
+      </ul>
+      <button class="plan-btn">Quiero Pro</button>
+    </div>
+  </div>
+</section>
+
+<section class="trust-section">
+  <div class="section-label">Confianza</div>
+  <h2 class="section-title">Miles de clientas ya lo viven</h2>
+  <div class="trust-stats">
+    <div>
+      <div class="stat-num">4.9/5</div>
+      <div class="stat-label">Valoración promedio</div>
+    </div>
+    <div>
+      <div class="stat-num">+10k</div>
+      <div class="stat-label">Suscriptoras activas</div>
+    </div>
+    <div>
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Cruelty-free</div>
+    </div>
+  </div>
+  <div style="margin-top: 3rem;">
+    <button class="btn-primary">¡Descarga GlamBox hoy mismo! 🛍️</button>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Glam<span style="color: #F472B6; font-style: italic;">Box</span></div>
+  <div class="footer-links">
+    <a href="#">Contacto</a>
+    <a href="#">Instagram</a>
+    <a href="#">TikTok</a>
+    <a href="#">Términos y condiciones</a>
+    <a href="#">Privacidad</a>
+  </div>
+  <div style="font-size: 0.78rem;">© 2026 GlamBox · Todos los derechos reservados</div>
+</footer>
+
+</body>
+</html>
